@@ -113,7 +113,10 @@ class InstallWrapper(install):
         self._LTSpice_cmd = self._find_ltspice()
         print("Found the LTSpice directory: ", self._LTSpice_cmd)
         string = "The LTSpice directory is defined as: \n'"+self._LTSpice_cmd+"'\n press enter to continue with this command or type the full LTspice command to override this value:"
-        ret_val = input(string)
+        try:
+            ret_val = input(string)
+        except:
+            pass
         if not ret_val:
             print("Using found LTSpice directory")
         else:
