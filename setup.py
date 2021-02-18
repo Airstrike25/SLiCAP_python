@@ -116,7 +116,7 @@ class InstallWrapper(install):
         try:
             ret_val = input(string)
         except:
-            pass
+            ret_val = False
         if not ret_val:
             print("Using found LTSpice directory")
         else:
