@@ -157,7 +157,11 @@ class InstallWrapper(install):
             slicap_home = os.path.join(home, 'SLiCAP')
 
             string = "Select a location for the SLiCAP installation, press enter for the default location('"+slicap_home+"'), otherwise type a full path to override this value:"
-            ret_val = input(string)
+            ret_val = False
+            try:
+                ret_val = input(string)
+            except:
+                pass
             # print(repr(ret_val))
             if not ret_val:
                 print("Using ", slicap_home)
