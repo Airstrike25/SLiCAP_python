@@ -83,7 +83,7 @@ def HTMLhead(pageTitle):
     html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"\n'
     html += '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n'
     html += '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n'
-    html += '<head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>\n'
+    html += '<head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>\n'
     html += '<meta name="Language" content="English"/>\n'
     html += '<title>"' + pageTitle + '"</title><link rel="stylesheet" href="css/slicap.css">\n'
     if ini.mathml == True:
@@ -142,7 +142,7 @@ def readFile(fileName):
         txt = f.read()
         f.close()
     except:
-        print("Error: could note open '{0}'.".format(fileName))
+        print("Error: could not open '{0}'.".format(fileName))
         txt = ''
     return txt
 
