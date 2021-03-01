@@ -516,14 +516,12 @@ def expr2html(expr, units = ''):
         html = html.replace('$', '$$')
     return html
 
-def eqn2html(arg1, arg2, units = '', label = '', labelText = ''):
+def eqn2html(*args, units = '', label = '', labelText = ''):
     """
     Displays an equation on the active HTML page'.
 
-    :param arg1: left hand side of the equation
-    :type arg1: str, sympy.Symbol, sympy.Expr
-    :param arg2: right hand side of the equation
-    :type arg2: str, sympy.Symbol, sympy.Expr
+    :param args: left hand side of the equation
+    :type args: str, sympy.Symbol, sympy.Expr
     :param label: ID of the label assigned to this equation; defaults to ''.
     :type label: str
     :param labelText: Label text to be displayed by **links2html()**; defaults to ''
@@ -531,10 +529,10 @@ def eqn2html(arg1, arg2, units = '', label = '', labelText = ''):
     :return: html: HTML string that will be placed on the page.
     :rtype: str
     """
-    if arg1 == None or arg2 == None:
+
+    if len(args) < 2:
         return
-    arg1 = sp.sympify(str(arg1))
-    arg2 = sp.sympify(str(arg2))
+
     if units != '':
         units = '\\,\\left[ \\mathrm{' + sp.latex(sp.sympify(units)) + '}\\right]'
 
@@ -545,8 +543,14 @@ def eqn2html(arg1, arg2, units = '', label = '', labelText = ''):
         newlabel = Label(label, 'eqn', ini.htmlPage, labelText)
         ini.htmlLabels[label] = newlabel
         label   = '<a id="'+ label +'"></a>\n'
-    html = label + '\\begin{equation}\n' + sp.latex(roundN(arg1)) + '=' + sp.latex(roundN(arg2)) + units + '\n'
-    html += '\\end{equation}\n'
+    html = label + '\\begin{equation}\n'
+
+    for arg in args[:-1]:
+        s = sp.sympify(str(arg))
+        html += sp.latex(roundN(s)) + '='
+
+    html += sp.latex(roundN(sp.sympify(str(args[-1])))) + units + '\n\\end{equation}\n'
+
     insertHTML(ini.htmlPath + ini.htmlPage, html)
     if ini.notebook:
         html = ('$$' + html + '$$')
